@@ -16,7 +16,7 @@ export const useContacts = () => {
     queryKey: [CONTACTS_QUERY_KEY],
     queryFn: async () => {
       const res = await axios.get<ContactsData[]>(
-        `${process.env.NEXT_PUBLIC_API_URL}/contacts`,
+        `/api/contacts`,
       );
       return res.data;
     },

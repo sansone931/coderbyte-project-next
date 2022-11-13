@@ -9,14 +9,11 @@ export const useCreateContact = () => {
 
   const { mutateAsync, isLoading } = useMutation({
     mutationFn: async (data: ContactFormData) => {
-      const res = await axios.post<ContactsData>(
-        `${process.env.NEXT_PUBLIC_API_URL}/contacts`,
-        {
-          firstName: data.firstName,
-          lastName: data.lastName,
-          phoneNumber: data.phoneNumber,
-        },
-      );
+      const res = await axios.post<ContactsData>(`/api/contacts`, {
+        firstName: data.firstName,
+        lastName: data.lastName,
+        phoneNumber: data.phoneNumber,
+      });
 
       return res.data;
     },

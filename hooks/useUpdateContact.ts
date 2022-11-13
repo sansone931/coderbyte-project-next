@@ -10,7 +10,7 @@ export const useUpdateContact = () => {
   const { mutateAsync, isLoading } = useMutation({
     mutationFn: async (data: ContactFormData) => {
       const res = await axios.patch<ContactsData>(
-        `${process.env.NEXT_PUBLIC_API_URL}/contacts/${data.id}`,
+        `/api/contacts/${data.id}`,
         {
           firstName: data.firstName,
           lastName: data.lastName,

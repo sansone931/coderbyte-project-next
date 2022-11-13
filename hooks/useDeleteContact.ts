@@ -8,9 +8,7 @@ export const useDeleteContact = () => {
 
   const { mutateAsync, isLoading } = useMutation({
     mutationFn: async (id: number) => {
-      const res = await axios.delete<ContactsData>(
-        `${process.env.NEXT_PUBLIC_API_URL}/contacts/${id}`,
-      );
+      const res = await axios.delete<ContactsData>(`/api/contacts/${id}`);
       return res.data;
     },
     onSuccess: () => {
