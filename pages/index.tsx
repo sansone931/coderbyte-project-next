@@ -1,3 +1,5 @@
+import { dehydrate, QueryClient } from '@tanstack/react-query';
+import { type GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { FC, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -11,6 +13,9 @@ import {
   useFilteredContacts,
   useUpdateContact,
 } from '../hooks';
+import { CONTACTS_QUERY_KEY } from '../hooks/useContacts';
+import { connectToDatabase } from '../server/connection';
+import { Contacts } from '../server/models/contacts';
 import { type ContactFormData } from '../types/contacts';
 
 const defaultContactFormValues: ContactFormData = {
@@ -144,6 +149,26 @@ const Home: FC = () => {
       </Modal>
     </main>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const queryClient = new QueryClient();
+
+  await connectToDatabase();
+
+  await queryClient.prefetchQuery({
+    queryKey: [CONTACTS_QUERY_KEY],
+    queryFn: async () => {
+      const contacts = await Contacts.findAll({ raw: true });
+      return JSON.parse(JSON.stringify(contacts));
+    },
+  });
+
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+  };
 };
 
 export default Home;
