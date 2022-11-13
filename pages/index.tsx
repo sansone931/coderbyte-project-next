@@ -3,12 +3,7 @@ import { FC, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { Button, Input, Modal } from '../components/core';
-import {
-  ContactFormData,
-  ContactList,
-  ContactsForm,
-  ContactsHeader,
-} from '../components/home';
+import { ContactList, ContactsForm, ContactsHeader } from '../components/home';
 import {
   useContacts,
   useCreateContact,
@@ -16,6 +11,7 @@ import {
   useFilteredContacts,
   useUpdateContact,
 } from '../hooks';
+import { type ContactFormData } from '../types/contacts';
 
 const defaultContactFormValues: ContactFormData = {
   id: null,
